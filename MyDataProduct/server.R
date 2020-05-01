@@ -10,11 +10,11 @@
 library(shiny)
 library(plotly)
 
+terrain     <- volcano - min(volcano)
 
 # Define server logic required to draw the maps
 shinyServer(function(input, output) {
     #initial data
-    terrain     <- volcano - 100
     waterL      <- reactive({input$waterL})
     
     # function to prepare and render the Plotly element
@@ -28,13 +28,13 @@ shinyServer(function(input, output) {
         
         # With waves, recalculate the water surface
         if(bWaves){
-            waveAngle   <- input$wAngl
+            waveAngle   <- input$wAngl / 360 * 2 * pi
             waveLength  <- input$wLength
             amplitude   <- input$wAmpl
             phase       <- input$Phase
             
-            wcos = cos(waveAngle / 360 * 2 * pi)
-            wsin = sin(waveAngle / 360 * 2 * pi)
+            wcos = cos(waveAngle)
+            wsin = sin(waveAngle)
             # * pmin.int(1+10/abs(waterL() - terrain),3)
             waves <- amplitude * 
                 sin(((row(terrain) * wcos + col(terrain) * wsin) / 
@@ -66,7 +66,7 @@ shinyServer(function(input, output) {
             layout(title = "Water Level at the volcano",
                    scene = list(xaxis = list(title = "local x (m)"),
                                 yaxis = list(title = "local y (m)"),
-                                zaxis = list(title = "altitude (m)", range = c(-10,110)))
+                                zaxis = list(title = "altitude (m)", range = c(0,130)))
             )
     })
     

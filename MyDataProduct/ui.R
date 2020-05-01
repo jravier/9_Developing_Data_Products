@@ -59,7 +59,7 @@ shinyUI(fluidPage(
                                      "Water Level:",
                                      post = "m",
                                      min = 0,
-                                     max = 100,
+                                     max = 120,
                                      value = 71),
                          # Checkbox input for adding waves to the water surface
                          checkboxInput("waves", "Show waves", FALSE),
@@ -99,7 +99,7 @@ shinyUI(fluidPage(
                      
                      # Show a Plotly Output with the 3D surfaces of both the volcano and the water
                      mainPanel(
-                         plotlyOutput("waterPlot"),
+                         plotlyOutput("waterPlot", height = "500px"),
                          
                          # additionaly show computed values
                          h3("Calculated values:"),
